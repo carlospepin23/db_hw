@@ -1,0 +1,6 @@
+"product_id","product_name","requires_refrigeration","requires_climate_control","required_temp_min","required_temp_max","section_name","has_refrigeration","has_climate_control","temperature_min","temperature_max","warehouse_name","status"
+"3","Canned Beans","false","false","10.00","30.00","Dry Goods","false","false","15.00","25.00","NYC Main Warehouse","VIOLATION"
+"10","Pasta Sauce","false","false","10.00","30.00","Dry Goods","false","false","15.00","25.00","NYC Main Warehouse","VIOLATION"
+"5","Laptop Computer","false","true","15.00","25.00","Electronics","false","true","18.00","22.00","LA Distribution Center","VIOLATION"
+"7","Orange Juice","true","false","2.00","6.00","Beverages","false","false","15.00","25.00","Chicago Hub","VIOLATION"
+"3","Canned Beans","false","false","10.00","30.00","Dry Goods","false","false","15.00","25.00","London Depot","VIOLATION"

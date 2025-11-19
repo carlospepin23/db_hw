@@ -1,0 +1,4 @@
+"id","username","role","title","body","user_id","status"
+"1","John","admin","Hello World","This is my first post","1","published"
+"2","John","admin","Hello World","This is my second post","1","published"
+"3","Jane","user","Hello World","This is my third post","2","published"

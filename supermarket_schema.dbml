@@ -1,30 +1,30 @@
 // Database Schema – Online Supermarket Chain
 // DBML (Database Markup Language) format
 
-Table COUNTRY {
+Table country {
   country_id integer [primary key, increment]
   country_name varchar(100) [not null, unique]
   country_code char(3) [not null, unique]
 }
 
-Table CITY {
+Table city {
   city_id integer [primary key, increment]
   city_name varchar(100) [not null]
-  country_id integer [not null, ref: > COUNTRY.country_id]
+  country_id integer [not null, ref: > country.country_id]
 }
 
-Table WAREHOUSE {
+Table warehouse {
   warehouse_id integer [primary key, increment]
   warehouse_name varchar(150) [not null]
-  city_id integer [not null, ref: > CITY.city_id]
-  country_id integer [not null, ref: > COUNTRY.country_id]
+  city_id integer [not null, ref: > city.city_id]
+  country_id integer [not null, ref: > country.country_id]
   address varchar(255) [not null]
   total_capacity decimal(10,2)
 }
 
-Table WAREHOUSE_SECTION {
+Table warehouse_section {
   section_id integer [primary key, increment]
-  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  warehouse_id integer [not null, ref: > warehouse.warehouse_id]
   section_name varchar(100) [not null]
   section_type varchar(50) [not null]
   has_refrigeration boolean [default: false]
@@ -33,7 +33,7 @@ Table WAREHOUSE_SECTION {
   temperature_max decimal(5,2)
 }
 
-Table PRODUCTS {
+Table product {
   product_id integer [primary key, increment]
   product_name varchar(200) [not null]
   description text
@@ -47,10 +47,10 @@ Table PRODUCTS {
   reorder_threshold integer [not null, default: 10]
 }
 
-Table SECTION_INVENTORY {
+Table section_inventory {
   inventory_id integer [primary key, increment]
-  section_id integer [not null, ref: > WAREHOUSE_SECTION.section_id]
-  product_id integer [not null, ref: > PRODUCTS.product_id]
+  section_id integer [not null, ref: > warehouse_section.section_id]
+  product_id integer [not null, ref: > product.product_id]
   quantity_available integer [not null, default: 0]
   last_updated timestamp [not null]
   
@@ -59,43 +59,43 @@ Table SECTION_INVENTORY {
   }
 }
 
-Table INVENTORY_TRANSACTION {
+Table inventory_transaction {
   transaction_id integer [primary key, increment]
-  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
-  product_id integer [not null, ref: > PRODUCTS.product_id]
+  warehouse_id integer [not null, ref: > warehouse.warehouse_id]
+  product_id integer [not null, ref: > product.product_id]
   transaction_type varchar(20) [not null, note: 'INBOUND or OUTBOUND']
   quantity integer [not null]
   transaction_date timestamp [not null]
   notes text
-  employee_id integer [ref: > EMPLOYEE.employee_id]
+  employee_id integer [ref: > employee.employee_id]
 }
 
-Table EMPLOYEE {
+Table employee {
   employee_id integer [primary key, increment]
   first_name varchar(50) [not null]
   last_name varchar(50) [not null]
   email varchar(100) [unique, not null]
   phone varchar(20)
-  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  warehouse_id integer [not null, ref: > warehouse.warehouse_id]
   position varchar(100) [not null]
   hire_date date [not null]
 }
 
-Table CUSTOMER {
+Table customer {
   customer_id integer [primary key, increment]
   first_name varchar(50) [not null]
   last_name varchar(50) [not null]
   email varchar(100) [unique, not null]
   phone varchar(20)
   shipping_address varchar(255) [not null]
-  shipping_city_id integer [not null, ref: > CITY.city_id]
-  shipping_country_id integer [not null, ref: > COUNTRY.country_id]
+  shipping_city_id integer [not null, ref: > city.city_id]
+  shipping_country_id integer [not null, ref: > country.country_id]
   registration_date date [not null]
 }
 
-Table ORDERS {
+Table order {
   order_id integer [primary key, increment]
-  customer_id integer [not null, ref: > CUSTOMER.customer_id]
+  customer_id integer [not null, ref: > customer.customer_id]
   order_date timestamp [not null]
   total_amount decimal(12,2) [not null]
   order_status varchar(30) [not null, note: 'PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED']
@@ -104,19 +104,19 @@ Table ORDERS {
   delivered_date timestamp
 }
 
-Table ORDER_ITEM {
+Table order_item {
   order_item_id integer [primary key, increment]
-  order_id integer [not null, ref: > ORDERS.order_id]
-  product_id integer [not null, ref: > PRODUCTS.product_id]
+  order_id integer [not null, ref: > order.order_id]
+  product_id integer [not null, ref: > product.product_id]
   quantity integer [not null]
   unit_price decimal(10,2) [not null]
   subtotal decimal(12,2) [not null]
 }
 
-Table ORDER_WAREHOUSE {
+Table order_warehouse {
   order_warehouse_id integer [primary key, increment]
-  order_id integer [not null, ref: > ORDERS.order_id]
-  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  order_id integer [not null, ref: > order.order_id]
+  warehouse_id integer [not null, ref: > warehouse.warehouse_id]
   fulfillment_status varchar(30) [not null, note: 'ASSIGNED, PICKING, PACKED, SHIPPED']
   assigned_date timestamp [not null]
   
@@ -126,19 +126,19 @@ Table ORDER_WAREHOUSE {
 }
 
 // Relationships Summary
-// COUNTRY (1) → (M) CITY
-// COUNTRY (1) → (M) WAREHOUSE
-// COUNTRY (1) → (M) CUSTOMER
-// CITY (1) → (M) WAREHOUSE
-// CITY (1) → (M) CUSTOMER
-// WAREHOUSE (1) → (M) WAREHOUSE_SECTION
-// WAREHOUSE (1) → (M) EMPLOYEE
-// WAREHOUSE (1) → (M) INVENTORY_TRANSACTION
-// WAREHOUSE (M) ↔ (M) ORDERS via ORDER_WAREHOUSE
-// WAREHOUSE_SECTION (1) → (M) SECTION_INVENTORY
-// PRODUCTS (1) → (M) SECTION_INVENTORY
-// PRODUCTS (1) → (M) INVENTORY_TRANSACTION
-// PRODUCTS (1) → (M) ORDER_ITEM
-// CUSTOMER (1) → (M) ORDERS
-// ORDERS (1) → (M) ORDER_ITEM
-// ORDERS (M) ↔ (M) WAREHOUSE via ORDER_WAREHOUSE
+// country (1) → (M) city
+// country (1) → (M) warehouse
+// country (1) → (M) customer
+// city (1) → (M) warehouse
+// city (1) → (M) customer
+// warehouse (1) → (M) warehouse_section
+// warehouse (1) → (M) employee
+// warehouse (1) → (M) inventory_transaction
+// warehouse (M) ↔ (M) order via order_warehouse
+// warehouse_section (1) → (M) section_inventory
+// product (1) → (M) section_inventory
+// product (1) → (M) inventory_transaction
+// product (1) → (M) order_item
+// customer (1) → (M) order
+// order (1) → (M) order_item
+// order (M) ↔ (M) warehouse via order_warehouse

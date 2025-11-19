@@ -1,0 +1,5 @@
+"order_id","tracking_number","order_date","order_status","total_amount","first_name","last_name","email","shipping_address"
+"3","TRK1003","2025-11-10 09:00:00","PROCESSING","28.45","Carol","Chen","carol.chen@email.com","789 Maple Drive"
+"4","(null)","2025-11-12 16:20:00","PENDING","67.93","Daniel","Davis","daniel.davis@email.com","321 Elm Road"
+"6","(null)","2025-11-18 13:45:00","PENDING","32.96","Alice","Anderson","alice.anderson@email.com","123 Oak Street"
+"7","TRK1005","2025-11-19 08:30:00","PROCESSING","125.45","Frank","Foster","frank.foster@email.com","987 Cedar Court"

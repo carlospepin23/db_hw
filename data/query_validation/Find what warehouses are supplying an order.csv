@@ -1,0 +1,3 @@
+"order_id","tracking_number","order_status","warehouse_id","warehouse_name","address","fulfillment_status","assigned_date","city_name","country_name"
+"4","(null)","PENDING","1","NYC Main Warehouse","123 Industrial Blvd","ASSIGNED","2025-11-12 17:00:00","New York","United States"
+"4","(null)","PENDING","4","Toronto Warehouse","321 Maple Street","ASSIGNED","2025-11-12 17:00:00","Toronto","Canada"

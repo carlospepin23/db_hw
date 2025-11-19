@@ -1,26 +1,26 @@
 ```mermaid
 erDiagram
-    COUNTRY ||--o{ CITY : "has"
-    COUNTRY ||--o{ WAREHOUSE : "located_in"
-    COUNTRY {
+    country ||--o{ city : "has"
+    country ||--o{ warehouse : "located_in"
+    country {
         int country_id PK
         string country_name
         string country_code
     }
 
-    CITY ||--o{ WAREHOUSE : "warehouse_city"
-    CITY ||--o{ CUSTOMER : "customer_city"
-    CITY {
+    city ||--o{ warehouse : "warehouse_city"
+    city ||--o{ customer : "customer_city"
+    city {
         int city_id PK
         string city_name
         int country_id FK
     }
 
-    WAREHOUSE ||--o{ WAREHOUSE_SECTION : "contains"
-    WAREHOUSE ||--o{ EMPLOYEE : "employs"
-    WAREHOUSE ||--o{ INVENTORY_TRANSACTION : "records"
-    WAREHOUSE ||--o{ ORDER_WAREHOUSE : "fulfills"
-    WAREHOUSE {
+    warehouse ||--o{ warehouse_section : "contains"
+    warehouse ||--o{ employee : "employs"
+    warehouse ||--o{ inventory_transaction : "records"
+    warehouse ||--o{ order_warehouse : "fulfills"
+    warehouse {
         int warehouse_id PK
         string warehouse_name
         int city_id FK
@@ -29,8 +29,8 @@ erDiagram
         decimal total_capacity
     }
 
-    WAREHOUSE_SECTION ||--o{ SECTION_INVENTORY : "stores"
-    WAREHOUSE_SECTION {
+    warehouse_section ||--o{ section_inventory : "stores"
+    warehouse_section {
         int section_id PK
         int warehouse_id FK
         string section_name
@@ -41,10 +41,10 @@ erDiagram
         decimal temperature_max
     }
 
-    PRODUCT ||--o{ SECTION_INVENTORY : "stored_in"
-    PRODUCT ||--o{ INVENTORY_TRANSACTION : "involves"
-    PRODUCT ||--o{ ORDER_ITEM : "included_in"
-    PRODUCT {
+    product ||--o{ section_inventory : "stored_in"
+    product ||--o{ inventory_transaction : "involves"
+    product ||--o{ order_item : "included_in"
+    product {
         int product_id PK
         string product_name
         string description
@@ -58,26 +58,26 @@ erDiagram
         int reorder_threshold
     }
 
-    SECTION_INVENTORY {
+    section_inventory {
         int inventory_id PK
         int section_id FK
         int product_id FK
         int quantity_available
-        datetime last_updated
+        timestamp last_updated
     }
 
-    INVENTORY_TRANSACTION {
+    inventory_transaction {
         int transaction_id PK
         int warehouse_id FK
         int product_id FK
         string transaction_type
         int quantity
-        datetime transaction_date
+        timestamp transaction_date
         string notes
         int employee_id FK
     }
 
-    EMPLOYEE {
+    employee {
         int employee_id PK
         string first_name
         string last_name
@@ -88,8 +88,8 @@ erDiagram
         date hire_date
     }
 
-    CUSTOMER ||--o{ ORDER : "places"
-    CUSTOMER {
+    customer ||--o{ order : "places"
+    customer {
         int customer_id PK
         string first_name
         string last_name
@@ -101,20 +101,20 @@ erDiagram
         date registration_date
     }
 
-    ORDER ||--o{ ORDER_ITEM : "contains"
-    ORDER ||--o{ ORDER_WAREHOUSE : "fulfilled_by"
-    ORDER {
+    order ||--o{ order_item : "contains"
+    order ||--o{ order_warehouse : "fulfilled_by"
+    order {
         int order_id PK
         int customer_id FK
-        datetime order_date
+        timestamp order_date
         decimal total_amount
         string order_status
         string tracking_number
-        datetime shipped_date
-        datetime delivered_date
+        timestamp shipped_date
+        timestamp delivered_date
     }
 
-    ORDER_ITEM {
+    order_item {
         int order_item_id PK
         int order_id FK
         int product_id FK
@@ -123,11 +123,11 @@ erDiagram
         decimal subtotal
     }
 
-    ORDER_WAREHOUSE {
+    order_warehouse {
         int order_warehouse_id PK
         int order_id FK
         int warehouse_id FK
         string fulfillment_status
-        datetime assigned_date
+        timestamp assigned_date
     }
 ```

@@ -1,0 +1,6 @@
+"warehouse_id","warehouse_name","address","unique_products","total_units","total_inventory_value"
+"2","LA Distribution Center","456 Commerce Ave","2","43","3059.57"
+"1","NYC Main Warehouse","123 Industrial Blvd","7","453","1765.47"
+"5","London Depot","654 Thames Road","3","189","736.61"
+"3","Chicago Hub","789 Logistics Way","2","125","663.75"
+"4","Toronto Warehouse","321 Maple Street","1","38","208.62"
