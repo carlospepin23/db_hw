@@ -125,7 +125,7 @@ Table order_warehouse {
   }
 }
 
-// Relationships Summary
+// Relationships
 // country (1) → (M) city
 // country (1) → (M) warehouse
 // country (1) → (M) customer
