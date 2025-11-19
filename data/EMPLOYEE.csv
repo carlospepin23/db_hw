@@ -1,0 +1,8 @@
+employee_id,first_name,last_name,email,phone,warehouse_id,position,hire_date
+1,John,Smith,john.smith@supermarket.com,555-0101,1,Warehouse Manager,2020-03-15
+2,Maria,Garcia,maria.garcia@supermarket.com,555-0102,1,Inventory Specialist,2021-06-01
+3,James,Wilson,james.wilson@supermarket.com,555-0103,2,Warehouse Manager,2019-11-20
+4,Sarah,Johnson,sarah.johnson@supermarket.com,555-0104,2,Forklift Operator,2022-01-10
+5,Michael,Brown,michael.brown@supermarket.com,555-0105,3,Inventory Specialist,2021-08-15
+6,Emily,Davis,emily.davis@supermarket.com,555-0106,4,Warehouse Manager,2020-05-22
+7,David,Martinez,david.martinez@supermarket.com,555-0107,5,Inventory Specialist,2022-03-01

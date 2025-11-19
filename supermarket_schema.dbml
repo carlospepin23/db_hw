@@ -1,0 +1,144 @@
+// Database Schema – Online Supermarket Chain
+// DBML (Database Markup Language) format
+
+Table COUNTRY {
+  country_id integer [primary key, increment]
+  country_name varchar(100) [not null, unique]
+  country_code char(3) [not null, unique]
+}
+
+Table CITY {
+  city_id integer [primary key, increment]
+  city_name varchar(100) [not null]
+  country_id integer [not null, ref: > COUNTRY.country_id]
+}
+
+Table WAREHOUSE {
+  warehouse_id integer [primary key, increment]
+  warehouse_name varchar(150) [not null]
+  city_id integer [not null, ref: > CITY.city_id]
+  country_id integer [not null, ref: > COUNTRY.country_id]
+  address varchar(255) [not null]
+  total_capacity decimal(10,2)
+}
+
+Table WAREHOUSE_SECTION {
+  section_id integer [primary key, increment]
+  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  section_name varchar(100) [not null]
+  section_type varchar(50) [not null]
+  has_refrigeration boolean [default: false]
+  has_climate_control boolean [default: false]
+  temperature_min decimal(5,2)
+  temperature_max decimal(5,2)
+}
+
+Table PRODUCTS {
+  product_id integer [primary key, increment]
+  product_name varchar(200) [not null]
+  description text
+  category varchar(100) [not null]
+  base_price decimal(10,2) [not null]
+  sku varchar(50) [unique, not null]
+  requires_refrigeration boolean [default: false]
+  requires_climate_control boolean [default: false]
+  required_temp_min decimal(5,2)
+  required_temp_max decimal(5,2)
+  reorder_threshold integer [not null, default: 10]
+}
+
+Table SECTION_INVENTORY {
+  inventory_id integer [primary key, increment]
+  section_id integer [not null, ref: > WAREHOUSE_SECTION.section_id]
+  product_id integer [not null, ref: > PRODUCTS.product_id]
+  quantity_available integer [not null, default: 0]
+  last_updated timestamp [not null]
+  
+  indexes {
+    (section_id, product_id) [unique]
+  }
+}
+
+Table INVENTORY_TRANSACTION {
+  transaction_id integer [primary key, increment]
+  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  product_id integer [not null, ref: > PRODUCTS.product_id]
+  transaction_type varchar(20) [not null, note: 'INBOUND or OUTBOUND']
+  quantity integer [not null]
+  transaction_date timestamp [not null]
+  notes text
+  employee_id integer [ref: > EMPLOYEE.employee_id]
+}
+
+Table EMPLOYEE {
+  employee_id integer [primary key, increment]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  email varchar(100) [unique, not null]
+  phone varchar(20)
+  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  position varchar(100) [not null]
+  hire_date date [not null]
+}
+
+Table CUSTOMER {
+  customer_id integer [primary key, increment]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  email varchar(100) [unique, not null]
+  phone varchar(20)
+  shipping_address varchar(255) [not null]
+  shipping_city_id integer [not null, ref: > CITY.city_id]
+  shipping_country_id integer [not null, ref: > COUNTRY.country_id]
+  registration_date date [not null]
+}
+
+Table ORDERS {
+  order_id integer [primary key, increment]
+  customer_id integer [not null, ref: > CUSTOMER.customer_id]
+  order_date timestamp [not null]
+  total_amount decimal(12,2) [not null]
+  order_status varchar(30) [not null, note: 'PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED']
+  tracking_number varchar(100) [unique]
+  shipped_date timestamp
+  delivered_date timestamp
+}
+
+Table ORDER_ITEM {
+  order_item_id integer [primary key, increment]
+  order_id integer [not null, ref: > ORDERS.order_id]
+  product_id integer [not null, ref: > PRODUCTS.product_id]
+  quantity integer [not null]
+  unit_price decimal(10,2) [not null]
+  subtotal decimal(12,2) [not null]
+}
+
+Table ORDER_WAREHOUSE {
+  order_warehouse_id integer [primary key, increment]
+  order_id integer [not null, ref: > ORDERS.order_id]
+  warehouse_id integer [not null, ref: > WAREHOUSE.warehouse_id]
+  fulfillment_status varchar(30) [not null, note: 'ASSIGNED, PICKING, PACKED, SHIPPED']
+  assigned_date timestamp [not null]
+  
+  indexes {
+    (order_id, warehouse_id) [unique]
+  }
+}
+
+// Relationships Summary
+// COUNTRY (1) → (M) CITY
+// COUNTRY (1) → (M) WAREHOUSE
+// COUNTRY (1) → (M) CUSTOMER
+// CITY (1) → (M) WAREHOUSE
+// CITY (1) → (M) CUSTOMER
+// WAREHOUSE (1) → (M) WAREHOUSE_SECTION
+// WAREHOUSE (1) → (M) EMPLOYEE
+// WAREHOUSE (1) → (M) INVENTORY_TRANSACTION
+// WAREHOUSE (M) ↔ (M) ORDERS via ORDER_WAREHOUSE
+// WAREHOUSE_SECTION (1) → (M) SECTION_INVENTORY
+// PRODUCTS (1) → (M) SECTION_INVENTORY
+// PRODUCTS (1) → (M) INVENTORY_TRANSACTION
+// PRODUCTS (1) → (M) ORDER_ITEM
+// CUSTOMER (1) → (M) ORDERS
+// ORDERS (1) → (M) ORDER_ITEM
+// ORDERS (M) ↔ (M) WAREHOUSE via ORDER_WAREHOUSE

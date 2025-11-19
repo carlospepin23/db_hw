@@ -1,0 +1,8 @@
+customer_id,first_name,last_name,email,phone,shipping_address,shipping_city_id,shipping_country_id,registration_date
+1,Alice,Anderson,alice.anderson@email.com,555-1001,123 Oak Street,1,1,2023-05-10
+2,Bob,Baker,bob.baker@email.com,555-1002,456 Pine Avenue,2,1,2023-06-15
+3,Carol,Chen,carol.chen@email.com,555-1003,789 Maple Drive,3,1,2023-07-20
+4,Daniel,Davis,daniel.davis@email.com,555-1004,321 Elm Road,4,2,2023-08-05
+5,Emma,Evans,emma.evans@email.com,555-1005,654 Birch Lane,7,4,2023-09-12
+6,Frank,Foster,frank.foster@email.com,555-1006,987 Cedar Court,1,1,2024-01-08
+7,Grace,Green,grace.green@email.com,555-1007,147 Spruce Way,2,1,2024-02-14

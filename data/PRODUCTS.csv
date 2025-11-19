@@ -1,0 +1,11 @@
+product_id,product_name,description,category,base_price,sku,requires_refrigeration,requires_climate_control,required_temp_min,required_temp_max,reorder_threshold
+1,Organic Milk,Fresh organic whole milk,Dairy,4.99,MILK-ORG-001,true,false,2.00,6.00,50
+2,Frozen Pizza,Pepperoni frozen pizza,Frozen Foods,8.99,PIZZA-PEP-001,true,true,-18.00,-10.00,30
+3,Canned Beans,Black beans canned,Pantry,1.49,BEANS-BLK-001,false,false,10.00,30.00,100
+4,Fresh Apples,Organic Fuji apples,Produce,3.99,APPLE-FUJ-001,true,false,2.00,8.00,75
+5,Laptop Computer,15-inch laptop,Electronics,899.99,LAPTOP-15-001,false,true,15.00,25.00,5
+6,Ice Cream,Vanilla ice cream,Frozen Foods,5.49,ICE-VAN-001,true,true,-18.00,-12.00,40
+7,Orange Juice,Fresh squeezed OJ,Beverages,6.99,OJ-FRSH-001,true,false,2.00,6.00,60
+8,Bread Loaf,Whole wheat bread,Bakery,3.49,BREAD-WW-001,false,false,15.00,25.00,80
+9,Cheese Block,Cheddar cheese,Dairy,7.99,CHSE-CHD-001,true,false,2.00,6.00,45
+10,Pasta Sauce,Marinara sauce,Pantry,4.99,SAUCE-MAR-001,false,false,10.00,30.00,70
