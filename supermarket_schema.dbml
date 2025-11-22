@@ -67,7 +67,7 @@ Table inventory_transaction {
   quantity integer [not null]
   transaction_date timestamp [not null]
   notes text
-  employee_id integer [ref: > employee.employee_id]
+  employee_id integer [not null, ref: > employee.employee_id]
 }
 
 Table employee {

@@ -60,7 +60,7 @@ CREATE TABLE "inventory_transaction" (
   "quantity" integer NOT NULL,
   "transaction_date" timestamp NOT NULL,
   "notes" text,
-  "employee_id" integer
+  "employee_id" integer NOT NULL
 );
 
 CREATE TABLE "employee" (

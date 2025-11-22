@@ -2,6 +2,9 @@
 ---
 
 ## 1. country
+
+Stores all countries where the company operates.
+
 | Attribute        | Data Type     | Constraints                               |
 |------------------|---------------|--------------------------------------------|
 | **country_id**   | INT           | PRIMARY KEY, AUTO_INCREMENT                |
@@ -16,6 +19,9 @@
 ---
 
 ## 2. city
+
+Contains all cities within each country.
+
 | Attribute      | Data Type     | Constraints                                       |
 |----------------|---------------|--------------------------------------------------|
 | **city_id**    | INT           | PRIMARY KEY, AUTO_INCREMENT                      |
@@ -29,6 +35,8 @@
 ---
 
 ## 3. warehouse
+Stores information about each warehouse, including its location and capacity, and acts as a central hub for inventory, employees, and order fulfillment.
+
 | Attribute         | Data Type     | Constraints                                    |
 |-------------------|---------------|------------------------------------------------|
 | **warehouse_id**  | INT           | PRIMARY KEY, AUTO_INCREMENT                    |
@@ -47,6 +55,9 @@
 ---
 
 ## 4. warehouse_section
+
+Each warehouse is divided into sections (e.g., refrigerated, dry storage). This table defines those sections and their environmental capabilities.
+
 | Attribute       | Data Type     | Constraints                                     |
 |-----------------|---------------|--------------------------------------------------|
 | **section_id**  | INT           | PRIMARY KEY, AUTO_INCREMENT                      |
@@ -64,6 +75,9 @@
 ---
 
 ## 5. product
+
+Stores all products in the catalog, including their category, base price, Stock-keeping Unit (SKU), and any special storage requirements.
+
 | Attribute                | Data Type     | Constraints                    |
 |--------------------------|---------------|---------------------------------|
 | **product_id**           | INT           | PRIMARY KEY, AUTO_INCREMENT     |
@@ -86,6 +100,9 @@
 ---
 
 ## 6. section_inventory
+
+Tracks the quantity of each product stored in each warehouse section, representing the real-time inventory of the company.
+
 | Attribute          | Data Type     | Constraints                                       |
 |--------------------|---------------|---------------------------------------------------|
 | **inventory_id**   | INT           | PRIMARY KEY, AUTO_INCREMENT                       |
@@ -103,6 +120,9 @@
 ---
 
 ## 7. inventory_transaction
+
+Records all product movement (inbound shipments and outbound usage), allowing the system to trackstock adjustments over time.
+
 | Attribute           | Data Type     | Constraints                                          |
 |---------------------|---------------|------------------------------------------------------|
 | **transaction_id**  | INT           | PRIMARY KEY, AUTO_INCREMENT                          |
@@ -112,7 +132,7 @@
 | quantity            | INT           | NOT NULL                                             |
 | transaction_date    | TIMESTAMP     | NOT NULL                                             |
 | notes               | TEXT          | NULL                                                 |
-| employee_id         | INT           | FOREIGN KEY → employee(employee_id), NULL            |
+| employee_id         | INT           | FOREIGN KEY → employee(employee_id), NOT NULL         |
 
 **Relationships:**  
 - inventory_transaction (M) → (1) product  
@@ -122,6 +142,9 @@
 ---
 
 ## 8. employee
+
+Contains employee records, linking each worker to the warehouse where they are assigned.
+
 | Attribute        | Data Type     | Constraints                                 |
 |------------------|---------------|----------------------------------------------|
 | **employee_id**  | INT           | PRIMARY KEY, AUTO_INCREMENT                  |
@@ -139,6 +162,9 @@
 ---
 
 ## 9. customer
+
+Stores customer profiles, including their contact information and shipping address for order delivery.
+
 | Attribute            | Data Type     | Constraints                                      |
 |----------------------|---------------|--------------------------------------------------|
 | **customer_id**      | INT           | PRIMARY KEY, AUTO_INCREMENT                       |
@@ -157,6 +183,9 @@
 ---
 
 ## 10. order
+
+Contains all customer orders, including status, tracking information, and important timestamps such as shipping and delivery dates.
+
 | Attribute        | Data Type     | Constraints                                 |
 |------------------|---------------|----------------------------------------------|
 | **order_id**     | INT           | PRIMARY KEY, AUTO_INCREMENT                  |
@@ -175,6 +204,9 @@
 ---
 
 ## 11. order_item
+
+Stores the individual items within each order, including product, quantity, and price at the moment of purchase.
+
 | Attribute         | Data Type     | Constraints                                 |
 |-------------------|---------------|----------------------------------------------|
 | **order_item_id** | INT           | PRIMARY KEY, AUTO_INCREMENT                  |
@@ -191,6 +223,9 @@
 ---
 
 ## 12. order_warehouse
+
+Links orders to the warehouses responsible for fulfilling them, enabling multi-warehouse fulfillment.
+
 | Attribute             | Data Type     | Constraints                                     |
 |-----------------------|---------------|-------------------------------------------------|
 | **order_warehouse_id**| INT           | PRIMARY KEY, AUTO_INCREMENT                      |
@@ -229,7 +264,7 @@
 # Queries
 
 **Query 1:** Products running low on stock  
-→ `section_inventory.quantity_available` + `product.reorder_threshold`
+→ `section_inventory.quantity_available` and `product.reorder_threshold`
 
 **Query 2:** Warehouses receiving restocks  
 → `inventory_transaction.transaction_type = 'INBOUND'`
